@@ -1,9 +1,11 @@
-import React from "react";
-import './style.scss';
+import React, {useState} from "react";
+import Item from "./Item";
+import style from './Lista.module.scss';
 
 // function é mais recomendado
 function Lista() {
-    const item =[{
+    //use associar com hook
+    const [tarefas, setTarefas] = useState([{
         tarefa: 'React',
         tempo:'02:00:00'
     },{
@@ -12,16 +14,18 @@ function Lista() {
     },{
         tarefa: 'Typescript',
         tempo:'03:00:00'
-    }]
+    }]);
     return(
-        <aside className="listaTarefas" >
-            <h2>Estudos do dia</h2>
+        <aside className={style.listaTarefas} >
+            <h2 onClick={() => {
+                setTarefas([...tarefas, {tarefa: "Estudar estado", tempo: "05:00:00"}])
+            }} >Estudos do dia</h2>
             <ul>
-                {item.map((item, index) =>(
-                    <li key={index} className="item" >
-                        <h3>{item.tarefa}</h3>
-                        <span> {item.tempo} </span>
-                    </li>
+                {tarefas.map((item, index) =>(
+                    <Item 
+                        key={index}
+                        {...item}
+                    />
                 ))}
             </ul>
         </aside>
